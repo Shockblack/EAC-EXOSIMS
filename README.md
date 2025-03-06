@@ -7,7 +7,7 @@ To build the repository from source, clone the `Sci-Eng-Interface` repository th
 ```
 pip install .
 ```
-You must then create an environemnt variable for the reference data, following the instructions on `Sci-Eng-Interface`, which can be stored in your `.bashrc`/`.zshrc` file (this line of code is directly pulled from their README):
+You must then create an environemnt variable that points to the installation location of the package, following the instructions on `Sci-Eng-Interface`, which can be stored in your `.bashrc`/`.zshrc` file (this line of code is directly pulled from their README):
 ```
 export SCI_ENG_DIR=/Users/tumlinson/anaconda3/envs/hwotools/lib/python3.12/site-packages/hwo_sci_eng
 ```
