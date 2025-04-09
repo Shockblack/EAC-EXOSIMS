@@ -66,12 +66,12 @@ class EAC:
         return csv_path[1:]
 
     
-    def optics(self, start_i = 0, end_i = -1, bad_modules = ['unitless']):
+    def optics(self, start_i = 0, end_i = -1, exc_modules = ['unitless']):
         
         optical_path = self.optical_path[start_i:end_i]
 
-        # Remove bad modules
-        optical_path = [module for module in optical_path if module not in bad_modules]
+        # Remove excluded modules
+        optical_path = [module for module in optical_path if module not in exc_modules]
 
         # First two elements are the Primary and Secondary mirrors, which are housed in eac
         eac_reflectivity = [self.read_refl(self.eac[module]['reflectivity']) for module in optical_path[:2] if 'reflectivity' in self.eac[module]]
@@ -162,7 +162,7 @@ class EAC:
 
         return
     
-    def update_ifs(self, ifs_key="spectro_EAC1_IFS_910"):
+    def update_ifs(self, ifs_key="spectro_EAC1_IFS_910", wb='IR'):
 
         ifs = [instrument for instrument in self.eac_json['scienceInstruments'] if ifs_key in instrument['name']]
 
@@ -194,7 +194,10 @@ class EAC:
         ifs['texp'] = 1000
 
         # Spectral resolution
-        ifs['Rs'] = 70
+        if wb == 'IR':
+            ifs['Rs'] = 70 
+        elif wb == 'VIS':
+            ifs['Rs'] = 140
 
         return
 
@@ -230,7 +233,7 @@ class EAC:
 # Main
 if __name__ == '__main__':
     eac = EAC(1)
-    eac.optics(0, -1, ['unitless', 'filters', 'Detector']) # 16 stops before apodizer
+    eac.optics(0, -1, ['unitless', 'filters', 'Detector', 'Apodizer', 'Focal_Plane_Mask', 'Lyot_Stop'])
     eac.update_imager()
     eac.update_starlightSuppressionSystems()
     eac.update_ifs()
