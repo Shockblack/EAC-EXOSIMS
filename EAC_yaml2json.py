@@ -26,6 +26,7 @@ class EAC:
 
         # Read in the template EAC JSON file to update
         # From Armen Tokadjian (A.T.; NASA JPL)
+        # NOTE: Will generalize this later to be more flexible, just being dirty for now
         with open('./data/EAC1_EXOSIMS_Template.json', 'r') as f:
             self.eac_json = json.load(f)
 
